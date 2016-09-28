@@ -1,9 +1,15 @@
 # Eloquent UUID
 Uuid primary key for Laravel Eloquent Models.
 
+## Installation
+Install through Composer
+```
+composer require marquine/eloquent-uuid
+```
+
 ## Usage
 ### Database table
-Create a column for the uuid primary key:
+In your migration, create a column for the uuid primary key:
 ```php
 $table->uuid('id')->primary();
 ```
