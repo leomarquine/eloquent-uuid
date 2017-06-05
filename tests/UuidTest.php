@@ -1,6 +1,8 @@
 <?php
 
 use Marquine\EloquentUuid\Uuid;
+use Illuminate\Events\Dispatcher;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Capsule\Manager as DB;
 
 class UuidTest extends PHPUnit_Framework_TestCase
@@ -27,17 +29,14 @@ class UuidTest extends PHPUnit_Framework_TestCase
     {
         DB::schema()->create('users', function ($table) {
             $table->uuid('id')->primary();
-            $table->string('name');
             $table->timestamps();
         });
     }
 
     protected function setEventDispatcher()
     {
-        if (! User::getEventDispatcher()) {
-            $dispatcher = new \Illuminate\Events\Dispatcher;
-
-            User::setEventDispatcher($dispatcher);
+        if (! Model::getEventDispatcher()) {
+            Model::setEventDispatcher(new Dispatcher);
         }
     }
 
@@ -45,7 +44,6 @@ class UuidTest extends PHPUnit_Framework_TestCase
     function it_auto_fills_an_uuid_in_the_primary_key_column()
     {
         $model = new User;
-        $model->name = 'Leonardo Marquine';
         $model->save();
 
         $this->assertTrue(\Ramsey\Uuid\Uuid::isValid($model->id));
@@ -58,7 +56,6 @@ class UuidTest extends PHPUnit_Framework_TestCase
 
         $model = new User;
         $model->id = $uuid;
-        $model->name = 'Leonardo Marquine';
         $model->save();
 
         $this->assertEquals($uuid, $model->id);
@@ -69,7 +66,6 @@ class UuidTest extends PHPUnit_Framework_TestCase
     {
         $model = new User;
         $model->id = 1; // anything thats not an uuid
-        $model->name = 'Leonardo Marquine';
         $model->save();
 
         $this->assertTrue(\Ramsey\Uuid\Uuid::isValid($model->id));
@@ -84,8 +80,4 @@ class UuidTest extends PHPUnit_Framework_TestCase
     }
 }
 
-
-class User extends \Illuminate\Database\Eloquent\Model
-{
-    use Uuid;
-}
+class User extends Model { use Uuid; }
