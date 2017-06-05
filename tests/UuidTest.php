@@ -48,13 +48,13 @@ class UuidTest extends PHPUnit_Framework_TestCase
         $model->name = 'Leonardo Marquine';
         $model->save();
 
-        $this->assertTrue(is_uuid($model->id));
+        $this->assertTrue(\Ramsey\Uuid\Uuid::isValid($model->id));
     }
 
     /** @test */
     function it_does_not_override_an_already_filled_uuid()
     {
-        $uuid = uuid();
+        $uuid = \Ramsey\Uuid\Uuid::uuid4();
 
         $model = new User;
         $model->id = $uuid;
@@ -72,7 +72,7 @@ class UuidTest extends PHPUnit_Framework_TestCase
         $model->name = 'Leonardo Marquine';
         $model->save();
 
-        $this->assertTrue(is_uuid($model->id));
+        $this->assertTrue(\Ramsey\Uuid\Uuid::isValid($model->id));
     }
 
     /** @test */
