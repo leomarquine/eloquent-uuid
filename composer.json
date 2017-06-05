@@ -15,10 +15,10 @@
     },
     "autoload": {
         "psr-4": {
-            "Marquine\\EloquentUuid\\": "src/Marquine/EloquentUuid/"
+            "Marquine\\EloquentUuid\\": "src/"
         },
         "files": [
-            "src/Marquine/EloquentUuid/helpers.php"
+            "src/helpers.php"
         ]
     },
     "require-dev": {
