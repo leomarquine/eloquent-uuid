@@ -2,20 +2,20 @@
 
 namespace Marquine\EloquentUuid;
 
+use Ramsey\Uuid\Uuid as Generator;
+
 trait Uuid
 {
     /**
-     * Boot uuid primary key.
+     * Boot uuid trait.
      *
      * @return void
      */
     protected static function bootUuid()
     {
         static::creating(function ($model) {
-            $model->incrementing = false;
-
-            if (! is_uuid($model->{$model->getKeyName()})) {
-                $model->{$model->getKeyName()} = uuid();
+            if (! Generator::isValid($model->{$model->getKeyName()})) {
+                $model->{$model->getKeyName()} = Generator::uuid4();
             }
         });
     }
