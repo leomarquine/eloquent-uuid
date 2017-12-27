@@ -15,7 +15,7 @@ trait Uuid
     {
         static::creating(function ($model) {
             if (! Generator::isValid($model->{$model->getKeyName()})) {
-                $model->{$model->getKeyName()} = Generator::uuid4();
+                $model->{$model->getKeyName()} = Generator::uuid4()->toString();
             }
         });
     }
